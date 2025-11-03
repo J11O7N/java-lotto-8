@@ -87,6 +87,7 @@ lotto/
 
 ```text
 1️⃣ enum을 활용한 Rank 설계
+
 등수 계산을 하드코딩하지 않고 Rank enum 내부에 등수, 상금, 조건을 정의했다.
 Rank.of(matches, bonusMatched) 정적 메서드를 통해 매칭 개수와 보너스 여부로 명확하게 등수를 판별한다.
 이로써 if-else나 switch 없이 명시적 의미가 있는 상수로 관리할 수 있었다.
@@ -94,15 +95,16 @@ EnumMap<Rank, Integer>를 사용해 각 등수별 당첨 개수를 저장함으�
 💡 하드코딩 대신 enum과 EnumMap을 이용해 "변하지 않는 규칙은 상수로, 변하는 값은 데이터로" 분리했다.
 
 2️⃣ 상수화 및 하드코딩 제거
+
 상금, 등수 기준, 범위(1~45) 등의 값을 코드에 직접 쓰지 않고 Rank, Lotto, WinningNumbers 내부의 상수로 선언했다.
 이로써 유지보수 시 실수 가능성을 줄이고 의미를 가진 이름으로 코드 가독성을 높였다.
-
 
 private static final int LOTTO_SIZE = 6;
 private static final int MIN_NUMBER = 1;
 private static final int MAX_NUMBER = 45;
 
 3️⃣ 일급컬렉션(First-Class Collection) 개념 이해 및 적용
+
 2주차에서는 단순히 Cars 안에 List<Car>를 주입하며 사용했다.
 스터디를 통해 이 구조가 일급컬렉션이라는 것을 알게 되었고, 이번에는 그 의도를 명확히 이해하고 적용했다.
 Tickets 클래스는 List<Lotto>를 감싸는 일급컬렉션이다.
@@ -110,6 +112,7 @@ Tickets 클래스는 List<Lotto>를 감싸는 일급컬렉션이다.
 외부에서는 리스트에 직접 접근할 수 없으며, 불변 컬렉션(Collections.unmodifiableList)로 보호된다.
 
 4️⃣ 불변 객체(Immutable Object) 설계
+
 Lotto, WinningNumbers, Tickets 모두 불변 객체로 설계했다.
 생성 시 검증 → 정렬 → 불변 컬렉션으로 래핑 후 저장
 이후 내부 상태 변경 불가
@@ -119,6 +122,7 @@ Lotto, WinningNumbers, Tickets 모두 불변 객체로 설계했다.
 this.numbers = Collections.unmodifiableList(sortedNumbers);
 
 5️⃣ Set을 이용한 중복 검증
+
 로또 번호와 당첨 번호의 중복 검증에 Set 자료구조를 활용했다.
 중복된 값이 존재하면 Set.add()가 false를 반환하므로 명확하고 효율적인 예외 검증이 가능했다.
 ```
