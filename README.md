@@ -41,7 +41,6 @@
 - 최종 수익률을 소수점 둘째 자리까지 출력한다.
 
 ---
-
 ## 파일구조
 
 ```text
@@ -89,7 +88,7 @@ lotto/
 1️⃣ enum을 활용한 Rank 설계
 
 등수 계산을 하드코딩하지 않고 Rank enum 내부에 등수, 상금, 조건을 정의했다.
-Rank.of(matches, bonusMatched) 정적 메서드를 통해 매칭 개수와 보너스 여부로 명확하게 등수를 판별한다.
+Rank.of(matches, bonusMatch) 정적 메서드를 통해 매칭 개수와 보너스 여부로 명확하게 등수를 판별한다.
 이로써 if-else나 switch 없이 명시적 의미가 있는 상수로 관리할 수 있었다.
 EnumMap<Rank, Integer>를 사용해 각 등수별 당첨 개수를 저장함으로써 키 안정성과 성능을 모두 확보했다.
 💡 하드코딩 대신 enum과 EnumMap을 이용해 "변하지 않는 규칙은 상수로, 변하는 값은 데이터로" 분리했다.
@@ -119,11 +118,10 @@ Lotto, WinningNumbers, Tickets 모두 불변 객체로 설계했다.
 이로써 예측 가능한 동작과 안정적인 테스트가 가능해졌다.
 
 예시: 
-this.numbers = Collections.unmodifiableList(sortedNumbers);
+this.numbers = Collections.unmodifiableList(Numbers);
 
 5️⃣ Set을 이용한 중복 검증
 
 로또 번호와 당첨 번호의 중복 검증에 Set 자료구조를 활용했다.
 중복된 값이 존재하면 Set.add()가 false를 반환하므로 명확하고 효율적인 예외 검증이 가능했다.
 ```
----
